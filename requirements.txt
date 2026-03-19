@@ -1,4 +1,10 @@
-pandas
+pandas==2.2.2
+numpy==1.26.4
+scikit-learn==1.4.2
+mlxtend==0.23.1
+streamlit==1.31.0
+altair==4.2.2
+plotly==5.20.0pandas
 numpy<2.3.0
 scikit-learn
 mlxtend
