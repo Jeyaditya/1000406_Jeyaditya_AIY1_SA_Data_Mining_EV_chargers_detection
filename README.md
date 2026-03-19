@@ -3,7 +3,7 @@
 **Candidate Name:** Jeyaditya
 **Course:** Artificial Intelligence - Data Mining Summative Assessment
 
-Link to access app - []
+Link to access app - [https://1000406jeyadityaaiy1sadataminingevchargersdetection.streamlit.app/]
 
 ## Project Rationale
 This project empowers stakeholders to leverage data mining techniques to solve real-world challenges within Electric Vehicle (EV) infrastructure. By exploring charging behavior across time-of-day, weekdays, and user profiles, this application provides actionable insights to improve station utilization and customer experience.
