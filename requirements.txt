@@ -3,5 +3,5 @@ numpy
 scikit-learn
 mlxtend
 streamlit
-altair
+altair==4.2.2
 plotly
