@@ -1,54 +1,87 @@
 # SmartCharging Analytics: Uncovering EV Behavior Patterns
 
-**Candidate Name:** Jeyaditya
-**Course:** Artificial Intelligence - Data Mining Summative Assessment
+ **Candidate Name:** Jeyaditya (JD) 
+ **Candidate Registration Number:** 1000406 
+ **CRS Name:** Artificial Intelligence 
+ **Course Name:** Data Mining Summative Assessment 
+ **School Name:** Jain Vidyalaya IB World School 
 
-Link to access app - [https://1000406jeyadityaaiy1sadataminingevchargersdetection.streamlit.app/]
+---
 
-## Project Rationale
-This project empowers stakeholders to leverage data mining techniques to solve real-world challenges within Electric Vehicle (EV) infrastructure. By exploring charging behavior across time-of-day, weekdays, and user profiles, this application provides actionable insights to improve station utilization and customer experience.
+## 🚀 Live Application
+Access the interactive dashboard here: 
+ **[SmartCharging Analytics Dashboard](https://1000406jeyadityaaiy1sadataminingevchargersdetection.streamlit.app/)** 
 
-## Methodology & Architecture
+---
 
-### 1. Data Integrity and Spatial Auditing
-Raw datasets often contain critical errors. During the initial exploratory phase, a significant anomaly was detected: several EV charging stations were mapped to coordinates in the middle of the Atlantic Ocean. 
+## 📌 Project Rationale & Scope
+ This project addresses the real-world challenge of optimizing Electric Vehicle (EV) infrastructure.  By analyzing global charging datasets, the application identifies usage trends, segments user behavior, and detects infrastructure anomalies to support data-driven expansion and pricing strategies.
 
-Resolving this was a primary focus of the preprocessing stage. A rigorous spatial bounding-box algorithm was implemented to audit the latitude and longitude parameters. The system flags stations located at default (0,0) or known oceanic coordinates and isolates them. This ensures the integrity of the downstream Machine Learning models while providing stakeholders with a clear report of hardware reporting failures.
+### Primary Objectives:
+*  **Behavioral Segmentation:** Grouping stations/users based on charging duration and frequency.
+*  **Anomaly Detection:** Identifying faulty hardware or unusual spikes in demand.
+*  **Trend Discovery:** Uncovering associations between station features (e.g., Renewable Energy) and high usage.
+*  **Interactive Deployment:** Providing stakeholders with a Streamlit-based intelligence dashboard.
 
-### 2. Behavioral Clustering (K-Means)
-To group customers based on charging duration and frequency, K-Means clustering was applied. 
-Prior to clustering, the continuous variables (Usage, Cost, and Capacity) were standardized using the following derivation to ensure scale-invariance:
-$x_{scaled} = \frac{x - \mu}{\sigma}$
+---
 
-The stations were successfully segmented into three distinct behavioral profiles:
-* Daily Commuters
-* Occasional Users
-* Heavy Users (Identified as high-priority expansion targets)
+## 🛠️ Data Preparation & Preprocessing
+ To ensure "Distinguished" data quality, the following steps were performed:
+*  **Spatial Integrity Auditing:** Implemented a bounding-box algorithm to isolate "Atlantic Ocean" coordinates (0,0), ensuring geographic visualizations remain accurate.
+*  **Handling Missing Values:** Managed null values in critical columns like `Reviews (Rating)`, `Renewable Energy Source`, and `Connector Types` using statistical imputation.
+*  **Feature Encoding:** Converted categorical data such as `Charger Type` (AC Level 1, AC Level 2, DC Fast) and `Station Operator` into numerical formats for algorithmic processing.
+* **Data Normalization:** Continuous variables (Cost, Usage, Capacity) were scaled to ensure scale-invariance using:
+   $$x_{scaled} = \frac{x - \mu}{\sigma}$$ 
 
-### 3. Statistical Anomaly Detection
-To identify unusual consumption behaviors, such as overuse or abnormal charging durations, statistical z-score modeling was utilized. 
-The derivation used to calculate the variance from the mean is:
-$Z = \frac{x - \mu}{\sigma}$
-Any station exhibiting a usage spike with an absolute Z-score greater than 2.5 is automatically flagged for maintenance review.
+---
 
-### 4. Association Rule Mining
-The Apriori algorithm was deployed to discover hidden relationships between station features. By analyzing frequent itemsets, the system uncovered high-confidence rules, notably the strong association between DC Fast Chargers, Renewable Energy Sources, and higher average user demand.
+## 📊 Exploratory Data Analysis (EDA)
+ The "Story of the Data" was uncovered through the following visualizations:
+*  **Demand Distribution (Histograms):** Analyzed `Usage Stats` (avg users/day) to identify demand levels across the network.
+*  **Temporal Growth (Line Charts):** Correlated `Usage Stats` with `Installation Year` to visualize the scaling of EV adoption.
+*  **Operational Insights (Boxplots):** Evaluated `Cost (USD/kWh)` across different `Station Operators` to identify pricing anomalies.
+*  **User Sentiment (Scatter Plots):** Discovered the relationship between `Reviews (Rating)` and station utilization.
 
-## Deployment Details
-The insights generated from this analysis are deployed via an interactive dashboard built on Streamlit Cloud. The interface allows users to seamlessly navigate through geographic intelligence maps, cluster visualizations, and raw data audits.
+---
 
-### Local Installation
+## 🤖 Advanced Analytics & Machine Learning
+
+### Behavioral Clustering (K-Means)
+ Using the **Elbow Method** to determine the optimal number of clusters, the dataset was segmented into three distinct profiles:
+1. **Daily Commuters:** Moderate, consistent usage patterns.
+2. **Occasional Users:** Low-frequency, short-duration charging.
+3.  **Heavy Users:** High-demand stations requiring prioritized maintenance.
+
+### Association Rule Mining (Apriori)
+ The system utilized the Apriori algorithm to identify high-confidence infrastructure patterns:
+*  **Identified Rule:** `{DC Fast Chargers} + {Renewable Energy Source} → {Higher Average Users}`.
+*  **Metrics:** Evaluated rules based on **Support, Confidence, and Lift** to ensure statistical significance.
+
+### Anomaly Detection (Z-Score)
+ To safeguard infrastructure, a statistical outlier detection model was implemented:
+* **Formula:** $Z = \frac{x - \mu}{\sigma}$
+*  **Threshold:** Stations with an absolute Z-score > 2.5 for usage or maintenance frequency are flagged for review.
+
+---
+
+## 📂 Repository Structure
+*  `app.py`: Main Streamlit application file.
+*  `requirements.txt`: List of necessary libraries (Pandas, Scikit-learn, etc.).
+*  `ev_charging_data.csv`: The dataset used for the project.
+*  `analysis_report.ipynb`: Detailed EDA and code implementation.
+*  `README.md`: Project documentation and insights.
+
+---
+
+## ⚙️ Local Installation
 1. Clone this repository.
-2. Install the required dependencies: pip install -r requirements.txt
-3. Execute the dashboard: streamlit run app.py
+2. Install dependencies: `pip install -r requirements.txt`
+3. Run the app: `streamlit run app.py`
 
-## Technologies Utilized
-* **Data Processing:** Pandas, NumPy
-* **Machine Learning:** Scikit-Learn (K-Means, StandardScaler), MLxtend (Apriori)
-* **Visualization & Deployment:** Streamlit, Plotly Express
+## 📚 References
+*  [Data-to-Viz: Visualization Guide](https://www.data-to-viz.com/) 
+*  [Neptune AI: K-Means Clustering](https://neptune.ai/blog/k-means-clustering) 
+*  [Scikit-learn Documentation](https://scikit-learn.org/) 
 
-## Credits:
-* Student name: A Jeyaditya
-* Registration number: 1000406
-* CRS Facillitator: Arul Jyoti
-* School name: Jain Vidyalaya IB World School
+---
+ **Facilitator:** Arul Jyoti
