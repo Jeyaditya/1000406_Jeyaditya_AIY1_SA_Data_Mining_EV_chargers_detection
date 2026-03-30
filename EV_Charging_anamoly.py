@@ -9,7 +9,6 @@ from mlxtend.frequent_patterns import apriori, association_rules
 # --- 1. CONFIGURATION & STYLING ---
 st.set_page_config(page_title="Pro-EV Analytics | JD", layout="wide", initial_sidebar_state="expanded")
 
-# Custom CSS for high-contrast metrics
 st.markdown("""
     <style>
     [data-testid="stMetric"] { 
@@ -35,10 +34,10 @@ st.markdown("""
     """, unsafe_allow_html=True) 
 
 # --- 2. HEADER & TITLE SECTION ---
-st.markdown('<p class="main-title">⚡ SmartCharging Analytics</p>', unsafe_allow_html=True)
+st.markdown('<p class="main-title">SmartCharging Analytics</p>', unsafe_allow_html=True)
 st.markdown('<p class="sub-title">Uncovering EV Behavior Patterns & Infrastructure Intelligence</p>', unsafe_allow_html=True)
 
-with st.expander("📌 View Project Scope & Objectives (Distinguished Criteria)"):
+with st.expander("View Project Scope & Objectives:"):
     st.write("""
     **Goal:** Analyze global EV charging patterns to improve station utilization and customer experience.
     **Key Objectives:**
@@ -53,17 +52,14 @@ st.markdown("---")
 @st.cache_data
 def run_analytics_pipeline():
     try:
-        # Loading the dataset required by the brief 
         df = pd.read_csv('detailed_ev_charging_stations.csv')
     except FileNotFoundError:
         st.error("Error: 'detailed_ev_charging_stations.csv' not found. Please ensure the dataset is in the repository.")
         return None, None, None
 
-    # Cleaning: Handling Missing Values
     df['Reviews (Rating)'] = df['Reviews (Rating)'].fillna(df['Reviews (Rating)'].median())
     df['Renewable Energy Source'] = df['Renewable Energy Source'].fillna('No')
     
-    # Integrity Audit: Detecting Geographic Outliers 
     df['Is_Geographic_Outlier'] = df.apply(
         lambda row: True if (abs(row['Latitude']) < 0.5 and abs(row['Longitude']) < 0.5) 
         or (row['Latitude'] > -10 and row['Latitude'] < 10 and row['Longitude'] > -40 and row['Longitude'] < -10)
@@ -72,7 +68,6 @@ def run_analytics_pipeline():
     
     df_clean = df[df['Is_Geographic_Outlier'] == False].copy()
 
-    # Advanced Analysis: K-Means Clustering
     features = ['Usage Stats (avg users/day)', 'Cost (USD/kWh)', 'Charging Capacity (kW)']
     scaler = StandardScaler()
     scaled_features = scaler.fit_transform(df_clean[features])
@@ -85,14 +80,11 @@ def run_analytics_pipeline():
     
     color_palette = {"Daily Commuters": "#1f77b4", "Occasional Users": "#2ca02c", "Heavy Users": "#d62728"}
     df_clean['Visual_Color'] = df_clean['Segment'].map(color_palette)
-
-    # Advanced Analysis: Anomaly Detection (Z-Score)
     mu = df_clean['Usage Stats (avg users/day)'].mean()
     sigma = df_clean['Usage Stats (avg users/day)'].std()
     df_clean['Usage_ZScore'] = (df_clean['Usage Stats (avg users/day)'] - mu) / sigma
     df_clean['Status'] = df_clean['Usage_ZScore'].apply(lambda x: "Anomaly" if abs(x) > 2.5 else "Normal")
 
-    # Advanced Analysis: Association Rule Mining (Apriori)
     df_clean['High_Demand'] = (df_clean['Usage Stats (avg users/day)'] > df_clean['Usage Stats (avg users/day)'].median()).astype(int)
     df_clean['Eco_Friendly'] = (df_clean['Renewable Energy Source'] == 'Yes').astype(int)
     
@@ -104,7 +96,6 @@ def run_analytics_pipeline():
     
     return df_clean, rules, ocean_outliers
 
-# Execute Pipeline
 df_clean, rules, ocean_outliers = run_analytics_pipeline()
 
 # --- 4. DEPLOYMENT INTERFACE ---
