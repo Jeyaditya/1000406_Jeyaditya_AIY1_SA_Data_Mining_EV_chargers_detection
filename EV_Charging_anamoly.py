@@ -14,6 +14,10 @@ st.markdown("""
     [data-testid="stMetric"] { background-color: #000000; padding: 15px; border-radius: 10px; border: 1px solid #333333; }
     </style>
     """, unsafe_allow_html=True) 
+# --- TITLE SECTION ---
+st.title("SmartCharging Analytics")
+st.subheader("Uncovering EV Behavior Patterns & Infrastructure Intelligence")
+st.markdown("---")
 # --- STAGE 1: PROJECT SCOPE & OBJECTIVES ---
 # Goal: Analyze EV charging patterns to improve station utilization and customer experience.
 # Objectives: Cluster behaviors, detect anomalies, and discover time-based associations.
